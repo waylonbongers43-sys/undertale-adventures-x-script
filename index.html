@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Undertale Adventures X Script — Auto-Farm, ESP & Speed Hack for Roblox</title>
+<meta name="description" content="Undertale Adventures X script with auto-farm gold, boss ESP, infinite HP toggle, speed hack and a one-click injector for the Roblox executor.">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+    background:#070a18;
+    color:#e6e9f5;
+    line-height:1.6;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    background:
+      radial-gradient(900px 600px at 12% -8%, rgba(99,102,241,.30), transparent 60%),
+      radial-gradient(800px 600px at 92% 8%, rgba(56,189,248,.16), transparent 62%),
+      radial-gradient(1000px 800px at 50% 108%, rgba(168,85,247,.18), transparent 65%),
+      linear-gradient(170deg,#0b1027 0%,#080b1c 38%,#0a0e22 68%,#060814 100%);
+  }
+  a{color:inherit;text-decoration:none}
+  .wrap{width:100%;max-width:1140px;margin:0 auto;padding:0 24px}
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:sticky;top:0;z-index:100;
+    background:rgba(11,16,39,.62);
+    backdrop-filter:blur(18px) saturate(160%);
+    -webkit-backdrop-filter:blur(18px) saturate(160%);
+    border-bottom:1px solid rgba(148,163,255,.14);
+  }
+  .nav-inner{
+    display:flex;align-items:center;justify-content:space-between;
+    gap:20px;height:72px;
+  }
+  .brand{display:flex;align-items:center;gap:11px;font-weight:800;letter-spacing:.2px;font-size:1.02rem}
+  .brand-mark{
+    width:34px;height:34px;border-radius:10px;display:grid;place-items:center;
+    font-size:1rem;
+    background:linear-gradient(135deg,#6366f1,#a855f7 55%,#38bdf8);
+    box-shadow:0 6px 20px rgba(99,102,241,.45);
+  }
+  .brand span{background:linear-gradient(90deg,#c7d2fe,#e9d5ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+  .nav-links{display:flex;align-items:center;gap:30px;font-size:.9rem;color:#a9b3d6}
+  .nav-links a{position:relative;padding:4px 0;transition:color .2s}
+  .nav-links a:hover{color:#fff}
+  .nav-links a::after{
+    content:"";position:absolute;left:0;bottom:-3px;height:2px;width:0;
+    background:linear-gradient(90deg,#818cf8,#38bdf8);border-radius:2px;transition:width .25s;
+  }
+  .nav-links a:hover::after{width:100%}
+
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:9px;
+    font-weight:700;font-size:.92rem;border-radius:12px;padding:12px 22px;
+    border:1px solid transparent;cursor:pointer;transition:transform .18s,box-shadow .25s,background .25s,border-color .25s;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    color:#fff;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6 50%,#22d3ee);
+    box-shadow:0 10px 28px -8px rgba(99,102,241,.85), inset 0 1px 0 rgba(255,255,255,.25);
+  }
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 16px 36px -8px rgba(139,92,246,.9), inset 0 1px 0 rgba(255,255,255,.3)}
+  .btn-ghost{
+    color:#dbe2ff;background:rgba(148,163,255,.07);
+    border-color:rgba(148,163,255,.26);
+  }
+  .btn-ghost:hover{background:rgba(148,163,255,.14);border-color:rgba(148,163,255,.5);transform:translateY(-2px)}
+  .nav .btn{padding:10px 20px;font-size:.86rem}
+  .nav-cta{display:inline-flex}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:84px 0 72px;text-align:center}
+  .pill{
+    display:inline-flex;align-items:center;gap:9px;
+    padding:7px 16px;border-radius:999px;font-size:.78rem;font-weight:700;
+    letter-spacing:.9px;text-transform:uppercase;color:#c7d2fe;
+    background:rgba(99,102,241,.12);
+    border:1px solid rgba(129,140,248,.4);
+    box-shadow:0 0 26px rgba(99,102,241,.28) inset;
+  }
+  .pill .dot{width:7px;height:7px;border-radius:50%;background:#34d399;box-shadow:0 0 10px #34d399;animation:pulse 2s infinite}
+  @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.8)}}
+
+  h1{
+    margin:26px auto 0;max-width:900px;
+    font-size:clamp(2.1rem,5.6vw,4rem);
+    line-height:1.08;letter-spacing:-1.4px;font-weight:900;
+    background:linear-gradient(100deg,#ffffff 0%,#c7d2fe 32%,#a78bfa 62%,#67e8f9 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hero p.lead{
+    max-width:660px;margin:22px auto 0;color:#a9b3d6;font-size:1.06rem;
+  }
+  .hero-actions{
+    display:flex;flex-wrap:wrap;gap:14px;justify-content:center;margin-top:34px;
+  }
+  .hero-actions .btn{padding:15px 30px;font-size:.98rem;border-radius:14px}
+
+  .stats{
+    display:grid;grid-template-columns:repeat(4,1fr);gap:14px;
+    max-width:880px;margin:52px auto 0;
+  }
+  .stat{
+    padding:18px 12px;border-radius:14px;
+    background:rgba(148,163,255,.055);
+    border:1px solid rgba(148,163,255,.14);
+    transition:border-color .25s,background .25s,transform .25s;
+  }
+  .stat:hover{border-color:rgba(129,140,248,.45);background:rgba(148,163,255,.09);transform:translateY(-3px)}
+  .stat b{display:block;font-size:1.18rem;font-weight:800;color:#fff;letter-spacing:-.3px}
+  .stat small{display:block;margin-top:3px;font-size:.74rem;letter-spacing:.7px;text-transform:uppercase;color:#8b96bf;font-weight:600}
+
+  /* ---------- SECTION HEADS ---------- */
+  section{padding:78px 0}
+  .sec-head{text-align:center;max-width:640px;margin:0 auto 48px}
+  .sec-head .kicker{
+    font-size:.75rem;font-weight:800;letter-spacing:1.6px;text-transform:uppercase;
+    color:#818cf8;
+  }
+  .sec-head h2{
+    margin-top:12px;font-size:clamp(1.6rem,3.4vw,2.4rem);font-weight:850;
+    letter-spacing:-.8px;color:#f2f4ff;
+  }
+  .sec-head p{margin-top:12px;color:#98a2c8;font-size:.98rem}
+
+  /* ---------- FEATURES ---------- */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+  .card{
+    position:relative;overflow:hidden;
+    padding:26px 24px 28px;border-radius:18px;
+    background:linear-gradient(165deg,rgba(148,163,255,.075),rgba(148,163,255,.025));
+    border:1px solid rgba(148,163,255,.14);
+    transition:transform .28s cubic-bezier(.2,.7,.3,1),box-shadow .28s,border-color .28s;
+  }
+  .card::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg,#6366f1,#a855f7,#38bdf8);
+    opacity:.9;
+  }
+  .card:hover{
+    transform:translateY(-7px);
+    border-color:rgba(129,140,248,.45);
+    box-shadow:0 24px 48px -20px rgba(99,102,241,.7);
+  }
+  .card .ico{
+    width:48px;height:48px;border-radius:13px;display:grid;place-items:center;
+    font-size:1.42rem;margin-bottom:16px;
+    background:rgba(99,102,241,.14);
+    border:1px solid rgba(129,140,248,.3);
+    box-shadow:0 0 24px rgba(99,102,241,.2) inset;
+  }
+  .card h3{font-size:1.04rem;font-weight:800;color:#f4f6ff;letter-spacing:-.2px}
+  .card p{margin-top:8px;font-size:.9rem;color:#98a2c8;line-height:1.65}
+
+  /* ---------- HOW IT WORKS ---------- */
+  .steps{position:relative;max-width:720px;margin:0 auto;padding-left:8px}
+  .steps::before{
+    content:"";position:absolute;left:31px;top:14px;bottom:14px;width:2px;
+    background:linear-gradient(180deg,#6366f1,#a855f7 50%,#38bdf8);
+    border-radius:2px;opacity:.75;
+  }
+  .step{position:relative;display:flex;gap:24px;padding:0 0 38px 0}
+  .step:last-child{padding-bottom:0}
+  .step .num{
+    flex:0 0 auto;width:48px;height:48px;border-radius:50%;display:grid;place-items:center;
+    font-weight:900;font-size:1rem;color:#fff;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    border:2px solid rgba(11,16,39,.9);
+    box-shadow:0 0 0 4px rgba(99,102,241,.16),0 8px 24px -6px rgba(99,102,241,.8);
+    position:relative;z-index:1;
+  }
+  .step-body{padding-top:8px}
+  .step h3{font-size:1.06rem;font-weight:800;color:#f4f6ff}
+  .step p{margin-top:6px;color:#98a2c8;font-size:.92rem;max-width:560px}
+  .step code{
+    font-family:ui-monospace,Consolas,monospace;font-size:.82rem;
+    background:rgba(99,102,241,.16);border:1px solid rgba(129,140,248,.3);
+    color:#c7d2fe;padding:2px 7px;border-radius:6px;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:13px}
+  details{
+    border-radius:14px;overflow:hidden;
+    background:rgba(148,163,255,.055);
+    border:1px solid rgba(148,163,255,.15);
+    transition:border-color .25s,background .25s;
+  }
+  details[open]{border-color:rgba(129,140,248,.45);background:rgba(148,163,255,.085)}
+  summary{
+    list-style:none;cursor:pointer;
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    padding:18px 22px;font-weight:700;font-size:.96rem;color:#e9ecff;
+    user-select:none;
+  }
+  summary::-webkit-details-marker{display:none}
+  summary::marker{content:""}
+  summary .plus{
+    flex:0 0 auto;width:26px;height:26px;border-radius:8px;display:grid;place-items:center;
+    font-size:1.05rem;font-weight:800;color:#c7d2fe;
+    background:rgba(99,102,241,.18);
+    border:1px solid rgba(129,140,248,.35);
+    transition:transform .3s cubic-bezier(.2,.7,.3,1),background .25s;
+  }
+  details[open] summary .plus{transform:rotate(45deg);background:rgba(168,85,247,.28)}
+  .faq-a{padding:0 22px 20px;color:#98a2c8;font-size:.9rem;line-height:1.7}
+  .faq-a strong{color:#c7d2fe}
+
+  /* ---------- CTA BANNER ---------- */
+  .cta-banner{
+    position:relative;overflow:hidden;
+    border-radius:26px;padding:64px 32px;text-align:center;
+    background:linear-gradient(160deg,rgba(99,102,241,.18),rgba(168,85,247,.12) 55%,rgba(56,189,248,.12));
+    border:1px solid rgba(148,163,255,.24);
+  }
+  .cta-banner::before{
+    content:"";position:absolute;inset:-40%;
+    background:radial-gradient(circle at 50% 50%,rgba(129,140,248,.42),transparent 62%);
+    pointer-events:none;
+  }
+  .cta-banner > *{position:relative;z-index:1}
+  .cta-banner h2{
+    font-size:clamp(1.55rem,3.6vw,2.5rem);font-weight:900;letter-spacing:-1px;
+    background:linear-gradient(100deg,#ffffff,#c7d2fe 55%,#67e8f9);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .cta-banner p{margin:14px auto 0;max-width:540px;color:#b3bde0;font-size:.98rem}
+  .cta-banner .btn{margin-top:30px;padding:16px 36px;font-size:1rem;border-radius:14px}
+  .cta-meta{margin-top:16px;font-size:.78rem;letter-spacing:.6px;text-transform:uppercase;color:#8b96bf;font-weight:700}
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    border-top:1px solid rgba(148,163,255,.13);
+    padding:34px 0 42px;
+    background:rgba(6,8,20,.6);
+  }
+  .foot{
+    display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;
+    font-size:.86rem;color:#8b96bf;
+  }
+  .foot a{
+    display:inline-flex;align-items:center;gap:7px;color:#c7d2fe;font-weight:700;
+    padding:8px 14px;border-radius:10px;
+    border:1px solid rgba(148,163,255,.2);
+    background:rgba(148,163,255,.06);
+    transition:background .22s,border-color .22s,transform .22s;
+  }
+  .foot a:hover{background:rgba(148,163,255,.14);border-color:rgba(148,163,255,.45);transform:translateY(-2px)}
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width:900px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+    .stats{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (max-width:640px){
+    .nav-links{display:none}
+    .nav-inner{height:64px}
+    .brand{font-size:.94rem}
+    .nav .btn{padding:9px 16px;font-size:.8rem}
+    .hero{padding:60px 0 52px}
+    .hero-actions .btn{width:100%}
+    .grid{grid-template-columns:1fr}
+    .stats{grid-template-columns:1fr;max-width:340px}
+    section{padding:56px 0}
+    .steps::before{left:23px}
+    .step{gap:16px}
+    .step .num{width:40px;height:40px;font-size:.9rem}
+    .cta-banner{padding:48px 22px;border-radius:20px}
+    .cta-banner .btn{width:100%}
+    .foot{flex-direction:column;text-align:center}
+    .wrap{padding:0 18px}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="wrap nav-inner">
+    <a class="brand" href="#top">
+      <span class="brand-mark">✦</span>
+      <span>Undertale Adventures X Script</span>
+    </a>
+    <div class="nav-links">
+      <a href="#features">Features</a>
+      <a href="#how">How it works</a>
+      <a href="#faq">FAQ</a>
+    </div>
+    <a class="btn btn-primary nav-cta" href="https://gitscore.cc" target="_blank" rel="noopener">Download</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero" id="top">
+  <div class="wrap">
+    <span class="pill"><span class="dot"></span>Roblox Script · Undertale Adventures X</span>
+    <h1>Auto-Farm Gold, Boss ESP &amp; Infinite HP in Undertale Adventures X</h1>
+    <p class="lead">
+      A single-file script built for the Undertale Adventures X Roblox executor. Toggle auto-farm gold,
+      boss ESP, infinite HP and speed hack from one clean panel — then inject in a single click.
+    </p>
+    <div class="hero-actions">
+      <a class="btn btn-primary" href="https://gitscore.cc" target="_blank" rel="noopener">⬇ Download Script</a>
+      <a class="btn btn-ghost" href="https://gitscore.cc" target="_blank" rel="noopener">◈ View on GitHub</a>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><b>128,400+</b><small>Downloads</small></div>
+      <div class="stat"><b>v3.4.2</b><small>Latest version</small></div>
+      <div class="stat"><b>Windows 10 / 11</b><small>Supported OS</small></div>
+      <div class="stat"><b>Free &amp; open source</b><small>License</small></div>
+    </div>
+  </div>
+</header>
+
+<!-- FEATURES -->
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">Features</div>
+      <h2>Everything you need to speedrun Undertale Adventures X</h2>
+      <p>Six core modules, all toggleable from a single in-game GUI. No key system, no bloat.</p>
+    </div>
+
+    <div class="grid">
+      <article class="card">
+        <div class="ico">💰</div>
+        <h3>Auto-Farm Gold</h3>
+        <p>Continuously clears the best gold routes in Undertale Adventures X, collects drops and auto-sells junk — leaving you free to AFK while the counter climbs.</p>
+      </article>
+
+      <article class="card">
+        <div class="ico">👁️</div>
+        <h3>Boss ESP</h3>
+        <p>Tracks boss spawns and rare enemies through walls with a distance readout and highlight box, so you never miss a timed encounter again.</p>
+      </article>
+
+      <article class="card">
+        <div class="ico">❤️</div>
+        <h3>Infinite HP Toggle</h3>
+        <p>Locks your health value in place during boss fights. Flip it off whenever you want a normal run — the switch is instant and reversible.</p>
+      </article>
+
+      <article class="card">
+        <div class="ico">⚡</div>
+        <h3>Speed Hack</h3>
+        <p>Adjustable walk and attack speed with a slider from 1× to 5×. Great for grinding long corridors or skipping slow dialogue transitions.</p>
+      </article>
+
+      <article class="card">
+        <div class="ico">🚀</div>
+        <h3>One-Click Injector</h3>
+        <p>Drop the script into your Roblox executor and hit inject. The loader detects the game, attaches the GUI and confirms the build version.</p>
+      </article>
+
+      <article class="card">
+        <div class="ico">🛡️</div>
+        <h3>Lightweight &amp; Clean</h3>
+        <p>No obfuscated payloads, no background updaters. The full source is readable, commented and updated as Undertale Adventures X patches roll out.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">How it works</div>
+      <h2>Running in under a minute</h2>
+      <p>Three steps from download to an active script panel inside Undertale Adventures X.</p>
+    </div>
+
+    <div class="steps">
+      <div class="step">
+        <div class="num">1</div>
+        <div class="step-body">
+          <h3>Download the script file</h3>
+          <p>Grab the latest <code>undertale-adventures-x-script.lua</code> from the download page. Keep the file somewhere easy to find — you'll paste or attach it in the executor.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">2</div>
+        <div class="step-body">
+          <h3>Launch the game and your executor</h3>
+          <p>Open Roblox, join Undertale Adventures X, then start your executor on Windows 10 or 11 and attach it to the Roblox process.</p>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="num">3</div>
+        <div class="step-body">
+          <h3>Inject and toggle your modules</h3>
+          <p>Paste the script and press execute. The panel appears in-game — switch on auto-farm gold, boss ESP, infinite HP or speed hack and watch them take effect instantly.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="kicker">FAQ</div>
+      <h2>Frequently asked questions</h2>
+      <p>Quick answers before you download the Undertale Adventures X script.</p>
+    </div>
+
+    <div class="faq">
+      <details>
+        <summary>Is the Undertale Adventures X script free to use? <span class="plus">+</span></summary>
+        <div class="faq-a">
+          Yes. The script is <strong>free and open source</strong>. There is no key system, no paid tier and no ad-gate — the download link takes you straight to the latest release.
+        </div>
+      </details>
+
+      <details>
+        <summary>Which executor does the one-click injector support? <span class="plus">+</span></summary>
+        <div class="faq-a">
+          The injector works with any modern Windows Roblox executor that supports standard Lua execution and GUI libraries. If your executor can run scripts, it can run this one — just attach, paste and execute.
+        </div>
+      </details>
+
+      <details>
+        <summary>Will auto-farm gold and infinite HP get my account banned? <span class="plus">+
